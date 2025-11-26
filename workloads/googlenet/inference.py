@@ -25,6 +25,8 @@ import imgproc
 import model
 from utils import load_state_dict
 
+import time
+
 model_names = sorted(
     name for name in model.__dict__ if name.islower() and not name.startswith("__") and callable(model.__dict__[name]))
 
@@ -99,8 +101,17 @@ def main():
 
     # Inference
     with torch.no_grad():
+        start = time.time()
         output = googlenet_model(tensor)
+        end = time.time()
 
+    inference_time = end - start
+    inference_cycles = inference_time * 1578000000
+    fpc = 1 / inference_cycles
+
+    print(f"Inference took: \n{inference_time} [s] \n{inference_cycles} [cycles]")
+    print(f"FPC: {fpc}")
+    
     # Calculate the five categories with the highest classification probability
     prediction_class_index = torch.topk(output, k=5).indices.squeeze(0).tolist()
 
@@ -117,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--class_label_file", type=str, default="./data/ImageNet_1K_labels_map.txt")
     parser.add_argument("--model_num_classes", type=int, default=1000)
     parser.add_argument("--model_weights_path", type=str, default="./results/pretrained_models/GoogleNet-ImageNet_1K-32d70693.pth.tar")
-    parser.add_argument("--image_path", type=str, default="./figure/n01440764_36.JPEG")
+    parser.add_argument("--image_path", type=str, default="../data/val_subset_2/n01440764/ILSVRC2012_val_00030740.JPEG")
     parser.add_argument("--image_size", type=int, default=224)
     parser.add_argument("--device_type", type=str, default="cpu", choices=["cpu", "cuda"])
     args = parser.parse_args()
