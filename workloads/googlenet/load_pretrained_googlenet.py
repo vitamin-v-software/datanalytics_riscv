@@ -5,7 +5,7 @@ import os
 # Define save path
 save_dir = './results/pretrained_models/'
 os.makedirs(save_dir, exist_ok=True)
-save_path = os.path.join(save_dir, 'epoch_001.pth.tar')
+save_path = os.path.join(save_dir, 'GoogleNet-ImageNet_1K-32d70693.pth.tar')
 
 # Load pretrained GoogleNet model
 model = models.googlenet(pretrained=True)
