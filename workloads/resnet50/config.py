@@ -2,7 +2,7 @@ import torch
 
 # Model and weights
 model_arch_name = "resnet50"
-pretrained_model_weights_path = "models/resnet50_checkpoint.pth"
+pretrained_model_weights_path = "results/pretrained_models/ResNet-ImageNet_1K-32d70693.pth.tar"
 model_num_classes = 10
 
 # Dataset

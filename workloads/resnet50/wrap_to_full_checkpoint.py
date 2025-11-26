@@ -8,5 +8,5 @@ model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
 state_dict = model.state_dict()
 
 # Save in checkpoint format
-torch.save({'state_dict': state_dict}, './models/resnet50_checkpoint.pth')
+torch.save({'state_dict': state_dict}, './results/pretrained_models/ResNet-ImageNet_1K-32d70693.pth.tar')
 
