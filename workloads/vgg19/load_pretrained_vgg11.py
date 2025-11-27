@@ -6,7 +6,7 @@ import os
 save_dir = './results/pretrained_models/'
 
 os.makedirs(save_dir, exist_ok=True)
-save_path = os.path.join(save_dir,'Vgg19-ImageNet_1K.pth.tar')
+save_path = os.path.join(save_dir,'VGG11-ImageNet_1K.pth.tar')
 
 # Load pretrained VGG11 model
 model = models.vgg11(pretrained=True)
