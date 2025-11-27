@@ -122,7 +122,7 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_arch_name", type=str, default="ResNet50")
-    parser.add_argument("--class_label_file", type=str, default="./data/ImageNet_1K_labels_map.txt")
+    parser.add_argument("--class_label_file", type=str, default="../data/ImageNet_1K_labels_map.txt")
     parser.add_argument("--model_num_classes", type=int, default=1000)
     parser.add_argument("--model_weights_path", type=str, default="./results/pretrained_models/ResNet-ImageNet_1K-32d70693.pth.tar")
     parser.add_argument("--image_path", type=str, default="../data/val_subset_2/n01440764/ILSVRC2012_val_00030740.JPEG")
