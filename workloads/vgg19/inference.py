@@ -13,6 +13,8 @@
 # ==============================================================================
 import argparse
 
+import time
+
 import torch
 from torch import nn
 
@@ -54,7 +56,17 @@ def main():
 
     # Inference
     with torch.no_grad():
+        start = time.time()
         output = vgg_model(tensor)
+        end = time.time()
+
+    inference_time = end - start
+    inference_cycles = inference_time * 1578000000
+    fpc = 1 / inference_cycles
+
+    print(f"Inference took: \n{inference_time} [s] \n{inference_cycles} [cycles]")
+    print(f"FPC: {fpc}")
+
 
     # Calculate the five categories with the highest classification probability
     prediction_class_index = torch.topk(output, k=5).indices.squeeze(0).tolist()
@@ -69,11 +81,11 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_arch_name", type=str, default="vgg11")
-    parser.add_argument("--class_label_file", type=str, default="./data/ImageNet_1K_labels_map.txt")
+    parser.add_argument("--class_label_file", type=str, default="../data/ImageNet_1K_labels_map.txt")
     parser.add_argument("--model_num_classes", type=int, default=1000)
     parser.add_argument("--model_weights_path", type=str,
-                        default="./results/pretrained_models/VGG11-ImageNet_1K-64f6524f.pth.tar")
-    parser.add_argument("--image_path", type=str, default="./figure/n01440764_36.JPEG")
+                        default="./results/pretrained_models/VGG11-ImageNet_1K.pth.tar")
+    parser.add_argument("--image_path", type=str, default="../data/val_subset_2/n01440764/ILSVRC2012_val_00030740.JPEG")
     parser.add_argument("--image_size", type=int, default=224)
     parser.add_argument("--range_norm", type=bool, default=False)
     parser.add_argument("--half", type=bool, default=False)
