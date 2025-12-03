@@ -4,14 +4,24 @@ This repository contains the PyTorch and TorchVision compiled wheels compatible 
 
 One can find a set of workloads (VGG19 for now) to test pytorch and torchvision packages functionality. It has to be noted that this repository serves as a proof of concept and that the workloads are focused on testing pytorch and showing that it can be already used on RISC-V machines with vector instructions to train models. Therefore, one will see that the vgg19 and googlenet models might not provide a production-ready efficiency and performance.
 
-Here you can find a set of steps to set up your environment with TorchVision and Pytorch for RV64GCV machines:
+Here you can find a set of steps to set up your environment with TorchVision and Pytorch for RV64GC and RV64GCV machines:
 
-The wheels can be found on the release tagged as torch-rvv-0.1. These are precompiled PyTorch and TorchVision wheels for riscv64 with vector instructions (RV64GCV).
+Wheels with and without vector instructions can be found on the releases tagged as torch-rvv-0.1 and torch-rv64gc-0.1, respectively. 
+
+RISCV64GCV wheels:
 
 - PyTorch version: 2.9.0a0+gita714437
 - TorchVision version: 0.20.1a0+3ac97aa
 - Python version: 3.12.3
-- Tested on: Linux 6.6.36, riscv64
+- Tested on: **Linux 6.6.36**, **Milk-V Jupiter**, riscv64
+
+RISCV64GC wheels:
+
+
+- PyTorch version: 2.10.0a0+gitae25ec5
+- TorchVision version: 0.25.0a0+f5c6c2e
+- Python version: 3.12.3
+- Tested on: **LicheePi4a**, **Linux 6.6.73**, riscv64
 
 ### Set up and Install process
 
@@ -29,6 +39,9 @@ By executing the following command, you should already obtain the above PyTorch 
 ```bash
 # PyTorch test
 python3 -c "import torch; print('Torch version:', torch.__version__)" 
+
+# Test from PyTorch documentation.
+python3 -c "import torch; x = torch.rand(5, 3); print(x)"
 
 # TorchVision test
 python3 -c "import torchvision; print('Torchvision version:', torchvision.__version__)"
