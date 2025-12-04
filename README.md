@@ -58,7 +58,7 @@ Torchvision version: 0.20.1a0+3ac97aa
 
 ### Train a workload
 
-Inside the workloads directory you will find 2 models, Vgg19 and GoogleNet. Vgg19 is heavier than GooglNet, for embedded and low performance devices, or faster runs, it is recommended to use GoogleNet.
+Inside the workloads directory you will find 3 models: Vgg11, ResNet50 and GoogleNet. Vgg19 is heavier than the other models, for embedded and low performance devices, or faster runs, it is recommended to use GoogleNet or ResNet.
 
 Both directories contain a python script called `load_pretrained_model.py` which downloads and saves a pretrained model (vgg19 or googlenet). This step is optional (but recommended), as you can upload your own custom pretrained model or weights. For a quick test, this script comes handful.
 
@@ -68,25 +68,60 @@ Steps guide summary:
 
 - optional and if not previously sourced
 ```bash
-source ~/<your-venv>/bin/activate
+python3 -m venv <your_venv>
+source ~/<your_venv>/bin/activate
+```
+
+- optional (you can upload your own weights)
+```bash
+python3 load_pretrained_<model>.py 
+```
+
+- For a quick training test
+```bash
+python3 train.py
+```
+
+- To benchmark your machine on a multicore environment
+```bash
+perf stat -d -d -d python3 train.py
+```
+
+- To benchmark your machine on a single core environment
+```bash
+taskset 0x1 perf stat -d -d -d python3 train.py
+```
+
+### Inference
+
+Inside the workloads directory you will find 3 models: Vgg11, ResNet50 and GoogleNet. Vgg19 is heavier than the other models, for embedded and low performance devices, or faster runs, it is recommended to use GoogleNet or ResNet.
+
+All directories contain a python script called `load_pretrained_<model>.py` which downloads and saves a pretrained model (vgg19 or googlenet). This script might be useful if you only care about inference performance and have not previously trained a model.
+
+Steps guide summary:
+
+- optional
+```bash
+python3 -m venv <your_venv>
+source ~/<your_venv>/bin/activate
 ```
 
 - optional (you can upload your own weights)
 ```bash
 python load_pretrained_<model>.py 
 ```
-
-- For a quick training test
 ```bash
-python train.py
+python3 inference.py
 ```
 
 - To benchmark your machine on a multicore environment
 ```bash
-perf stat -d -d -d python train.py
+perf stat -d -d -d python3 inference.py
 ```
 
 - To benchmark your machine on a single core environment
 ```bash
-taskset 0x1 perf stat -d -d -d python train.py
+taskset 0x1 perf stat -d -d -d python3 inference.py
 ```
+
+Be aware that these models aim stressing the machine they are hosted in, not to be accurate. Therefore, and having an incredible small amount of data to reduce training time in embedded systems, models might not perform as one would expect, but that is not the aim of this repository.
